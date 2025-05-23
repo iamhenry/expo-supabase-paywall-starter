@@ -1,11 +1,6 @@
 # 💻 Application Overview
 
-The application is pretty simple. Users can sign up, sign in, and sign out. It now also includes capabilities for handling in-app purchases using RevenueCat.
-
-## Features
-
-* User Authentication (Sign Up, Sign In, Sign Out) via Supabase.
-* In-App Purchases managed by RevenueCat. For more details, see [In-App Purchases Documentation](./in-app-purchases.md).
+The application is pretty simple. Users can sign up, sign in, and sign out.
 
 ## Get Started
 

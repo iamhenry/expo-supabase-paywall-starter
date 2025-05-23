@@ -1,21 +1,19 @@
 import "../global.css";
 
 import { Stack } from "expo-router";
+import { useEffect } from 'react';
+import { initializeRevenueCat } from '../config/revenuecat';
 
 import { AuthProvider } from "@/context/supabase-provider";
 import { useColorScheme } from "@/lib/useColorScheme";
 import { colors } from "@/constants/colors";
-import { initializeRevenueCat } from '../config/revenuecat';
 
 export default function AppLayout() {
 	const { colorScheme } = useColorScheme();
 
-	// Initialize RevenueCat
-	try {
-	  initializeRevenueCat();
-	} catch (e) {
-	  console.error('Failed to initialize RevenueCat from _layout.tsx', e);
-	}
+	useEffect(() => {
+		initializeRevenueCat(); // Initialize RevenueCat
+	}, []); // Empty dependency array ensures this runs once on mount
 
 	return (
 		<AuthProvider>
