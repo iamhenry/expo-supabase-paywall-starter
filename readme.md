@@ -15,6 +15,7 @@ This is not supposed to be a template, boilerplate or a framework. It is an opin
 - [💻 Application Overview](docs/application-overview.md)
 - [⚙️ Project Configuration](docs/project-configuration.md)
 - [🗄️ Project Structure](docs/project-structure.md)
+- [🔗 State Management](docs/state-management.md)
 - [🧱 Components And Styling](docs/components-and-styling.md)
 - [🛒 Subscriptions & Paywall](docs/subscriptions-and-paywall.md)
 

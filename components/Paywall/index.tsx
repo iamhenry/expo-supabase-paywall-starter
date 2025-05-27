@@ -18,6 +18,29 @@ type PaywallProps = {
 	onClose?: () => void;
 };
 
+/**
+ * Full-screen RevenueCat paywall wrapper that handles all data-fetching and
+ * error/placeholder UI states before delegating the actual rendering to
+ * `react-native-purchases-ui`.
+ *
+ * Props
+ * -----
+ * entitlementKey       Entitlement expected to be unlocked after purchase.
+ * overrides            Optional remote-config overrides injected into the paywall.
+ * onPurchaseComplete   Callback fired after a successful purchase and receipt sync.
+ * onClose              Callback fired when the user dismisses the paywall.
+ *
+ * Example
+ * -------
+ * ```tsx
+ * <Paywall
+ *   entitlementKey="pro"
+ *   overrides={{ title: "Go Pro" }}
+ *   onPurchaseComplete={(info) => console.log("Purchased!", info)}
+ *   onClose={() => router.back()}
+ * />
+ * ```
+ */
 export function Paywall({
 	entitlementKey,
 	overrides,
