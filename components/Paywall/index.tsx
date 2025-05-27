@@ -52,7 +52,7 @@ export function Paywall({
 	const [state, setState] = React.useState<PaywallState>("loading");
 	const [error, setError] = React.useState<unknown>(null);
 
-	/* ───────────────────────── Unmount safety ───────────────────────── */
+	/* --- Unmount safety ------------------------------------------------ */
 	const isMounted = React.useRef(true);
 
 	React.useEffect(() => {
@@ -108,7 +108,7 @@ export function Paywall({
 		fetchData();
 	}, [entitlementKey, fetchData]);
 
-	/* ─────────────────────── Render helpers ─────────────────────── */
+	/* --- Render helpers -------------------------------------------- */
 
 	if (state === "loading") {
 		return (
