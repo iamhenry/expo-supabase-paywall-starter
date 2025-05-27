@@ -2,37 +2,32 @@ import { Platform } from "react-native";
 import Purchases from "react-native-purchases";
 
 /**
- * RevenueCat SDK keys – pulled from env so that no secrets ever live in VCS.
+ * RevenueCat SDK key – pulled from env so that no secrets ever live in VCS.
+ * Android support has been removed; the SDK is now initialised only on iOS.
  */
 export const REVENUECAT_IOS_API_KEY =
 	process.env.EXPO_PUBLIC_REVENUECAT_IOS_KEY ?? "";
-export const REVENUECAT_ANDROID_API_KEY =
-	process.env.EXPO_PUBLIC_REVENUECAT_ANDROID_KEY ?? "";
 
 /**
- * Initialise the RevenueCat SDK.
+ * Initialise the RevenueCat SDK (iOS only).
  * Returns `true` when configured, `false` when skipped or on error.
  */
 export function configureRevenueCat(appUserId?: string | null): boolean {
-	const apiKey =
-		Platform.OS === "ios"
-			? REVENUECAT_IOS_API_KEY
-			: REVENUECAT_ANDROID_API_KEY;
+	if (Platform.OS !== "ios") {
+		// No-op on other platforms.
+		return false;
+	}
 
-	if (!apiKey) {
+	if (!REVENUECAT_IOS_API_KEY) {
 		console.warn(
-			`[revenuecat] ${
-				Platform.OS === "ios"
-					? "EXPO_PUBLIC_REVENUECAT_IOS_KEY"
-					: "EXPO_PUBLIC_REVENUECAT_ANDROID_KEY"
-			} is not set – Purchases.configure() has been skipped.`,
+			"[revenuecat] EXPO_PUBLIC_REVENUECAT_IOS_KEY is not set – Purchases.configure() has been skipped.",
 		);
 		return false;
 	}
 
 	try {
 		Purchases.configure({
-			apiKey,
+			apiKey: REVENUECAT_IOS_API_KEY,
 			appUserID: appUserId ?? undefined,
 		});
 		return true;
@@ -43,17 +38,10 @@ export function configureRevenueCat(appUserId?: string | null): boolean {
 }
 
 /**
- * Simple runtime sanity-check so developers notice missing keys quickly.
+ * Simple runtime sanity-check so developers notice a missing key quickly.
  */
-if (__DEV__) {
-	if (Platform.OS === "ios" && !REVENUECAT_IOS_API_KEY) {
-		console.warn(
-			"[revenuecat] EXPO_PUBLIC_REVENUECAT_IOS_KEY is not set – RevenueCat SDK will fail to initialise on iOS.",
-		);
-	}
-	if (Platform.OS === "android" && !REVENUECAT_ANDROID_API_KEY) {
-		console.warn(
-			"[revenuecat] EXPO_PUBLIC_REVENUECAT_ANDROID_KEY is not set – RevenueCat SDK will fail to initialise on Android.",
-		);
-	}
+if (__DEV__ && Platform.OS === "ios" && !REVENUECAT_IOS_API_KEY) {
+	console.warn(
+		"[revenuecat] EXPO_PUBLIC_REVENUECAT_IOS_KEY is not set – RevenueCat SDK will fail to initialise on iOS.",
+	);
 }

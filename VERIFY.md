@@ -1,11 +1,10 @@
 # ✅ RevenueCat Integration – Manual Verification
 
 Use this checklist to ensure everything is wired up correctly before sending a
-build to TestFlight / Play Store.
+build to TestFlight.
 
 1. Env vars  
    - [ ] `EXPO_PUBLIC_REVENUECAT_IOS_KEY` set  
-   - [ ] `EXPO_PUBLIC_REVENUECAT_ANDROID_KEY` set  
 
 2. Build-time integration  
    - [ ] `react-native-purchases` appears in the **`expo prebuild`** or EAS logs  

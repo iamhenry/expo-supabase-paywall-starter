@@ -10,7 +10,7 @@ purchases and subscriptions. The integration covers:
 
 ## Configuration
 
-1. Create public SDK keys in the RevenueCat dashboard (iOS & Android).
+1. Create a public iOS SDK key in the RevenueCat dashboard.
 2. Copy them into your local `.env`:
 
    ```bash
