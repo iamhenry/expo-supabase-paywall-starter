@@ -70,7 +70,7 @@ export function Paywall({
 						offering.identifier === entitlementKey
 					);
 				}) ??
-				// Fallback to the currently‐active offering.
+				// Fallback to the currently-active offering.
 				offerings.current;
 			if (!active) {
 				throw new Error(
