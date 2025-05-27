@@ -25,9 +25,17 @@ export default function Settings() {
 	// --- RevenueCat initialisation ------------------------------------------------
 	React.useEffect(() => {
 		(async () => {
+			// Fail fast when the API key is missing or empty
+			if (!REVENUECAT_IOS_API_KEY) {
+				Alert.alert(
+					"Configuration Error",
+					"Missing RevenueCat iOS API key. Please add REVENUECAT_IOS_API_KEY to your environment configuration.",
+				);
+				return;
+			}
 			try {
 				await Purchases.configure({
-					apiKey: REVENUECAT_IOS_API_KEY || "RC_IOS_API_KEY_NOT_SET",
+					apiKey: REVENUECAT_IOS_API_KEY,
 				});
 				setSdkReady(true);
 			} catch (e) {
