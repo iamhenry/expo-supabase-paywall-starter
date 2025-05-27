@@ -52,9 +52,7 @@ export function Paywall({
 	const [state, setState] = React.useState<PaywallState>("loading");
 	const [error, setError] = React.useState<unknown>(null);
 
-	/* ------------------------------------------------------------------ */
-	/* Prevent setting state after the component has unmounted            */
-	/* ------------------------------------------------------------------ */
+	/* ───────────────────────── Unmount safety ───────────────────────── */
 	const isMounted = React.useRef(true);
 
 	React.useEffect(() => {
