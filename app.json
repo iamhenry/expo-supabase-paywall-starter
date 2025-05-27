@@ -56,8 +56,7 @@
       [
         "react-native-purchases",
         {
-          "apiKeyIOS": "${EXPO_PUBLIC_REVENUECAT_IOS_KEY}",
-          "apiKeyAndroid": "${EXPO_PUBLIC_REVENUECAT_ANDROID_KEY}"
+          "apiKeyIOS": "${EXPO_PUBLIC_REVENUECAT_IOS_KEY}"
         }
       ]
     ]
