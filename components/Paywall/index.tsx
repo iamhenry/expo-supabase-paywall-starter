@@ -58,7 +58,20 @@ export function Paywall({
 
 		try {
 			const offerings = await Purchases.getOfferings();
-			const active = offerings.current;
+
+			// Try to find an offering that matches the requested entitlement.
+			const active =
+				// Look through all available offerings for a match.
+				Object.values(offerings.all ?? {}).find((offering: any) => {
+					const metaEntitlementId =
+						(offering.metadata as any)?.entitlement?.identifier;
+					return (
+						metaEntitlementId === entitlementKey ||
+						offering.identifier === entitlementKey
+					);
+				}) ??
+				// Fallback to the currently‐active offering.
+				offerings.current;
 			if (!active) {
 				throw new Error(
 					"No active offering found while trying to render paywall.",
@@ -73,7 +86,7 @@ export function Paywall({
 			setError(err);
 			setState("error");
 		}
-	}, []);
+	}, [entitlementKey]);
 
 	React.useEffect(() => {
 		/* Fetch data on mount and whenever a different entitlement is requested */
