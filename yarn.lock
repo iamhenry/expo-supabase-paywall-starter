@@ -1585,6 +1585,11 @@
   dependencies:
     merge-options "^3.0.4"
 
+"@react-native-community/netinfo@^11.4.1":
+  version "11.4.1"
+  resolved "https://registry.yarnpkg.com/@react-native-community/netinfo/-/netinfo-11.4.1.tgz#a3c247aceab35f75dd0aa4bfa85d2be5a4508688"
+  integrity sha512-B0BYAkghz3Q2V09BF88RA601XursIEA111tnc2JOaN7axJWmNefmfjZqw/KdSxKZp7CZUuPpjBmz/WCR9uaHYg==
+
 "@react-native/assets-registry@0.79.2":
   version "0.79.2"
   resolved "https://registry.yarnpkg.com/@react-native/assets-registry/-/assets-registry-0.79.2.tgz#731963e664c8543f5b277e56c058bde612b69f50"
@@ -1777,6 +1782,11 @@
   integrity sha512-SBh/3G7pURIQfIwG4OnAfLvq0E4+l1Ii6577z22cIhWIrTOHFXg0rMxC7ft/amzxYn+iG2nYa4dONRd+xIs+yg==
   dependencies:
     nanoid "3.3.8"
+
+"@revenuecat/purchases-typescript-internal@13.32.0":
+  version "13.32.0"
+  resolved "https://registry.yarnpkg.com/@revenuecat/purchases-typescript-internal/-/purchases-typescript-internal-13.32.0.tgz#fba4d7722131d07379ae98ead157f0b7827ff29b"
+  integrity sha512-I5qMjWafuk3gy8QKo1O1qQV8mUxoQ79BdA0j/8d2QSyKeqHIkpRAkTN53uCKEPYXf5pfiEbsGJlVgRZvsQXBYQ==
 
 "@rn-primitives/label@^1.1.0":
   version "1.1.0"
@@ -6103,6 +6113,21 @@ react-native-is-edge-to-edge@1.1.7, react-native-is-edge-to-edge@^1.1.6:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/react-native-is-edge-to-edge/-/react-native-is-edge-to-edge-1.1.7.tgz#28947688f9fafd584e73a4f935ea9603bd9b1939"
   integrity sha512-EH6i7E8epJGIcu7KpfXYXiV2JFIYITtq+rVS8uEb+92naMRBdxhTuS8Wn2Q7j9sqyO0B+Xbaaf9VdipIAmGW4w==
+
+react-native-purchases-ui@^8.10.1:
+  version "8.10.1"
+  resolved "https://registry.yarnpkg.com/react-native-purchases-ui/-/react-native-purchases-ui-8.10.1.tgz#73265d3fc513a925e919c62fc2be8fd4eed6c119"
+  integrity sha512-Kbw6a7kDbs3kWXHzmlh+Q45JWMMdn7qWQSlfyVsIZkPj/BXSg8S6FZLkqLdqRjJu16IabOzf3+cevAU6Y9B20A==
+  dependencies:
+    "@revenuecat/purchases-typescript-internal" "13.32.0"
+    react-native-purchases "8.10.1"
+
+react-native-purchases@8.10.1, react-native-purchases@^8.10.1:
+  version "8.10.1"
+  resolved "https://registry.yarnpkg.com/react-native-purchases/-/react-native-purchases-8.10.1.tgz#b10c648254e9b5beba9084992109fa675d43eca8"
+  integrity sha512-C0r4MRVj57fA/A1yEdAKOivRlA3QM/uyPxgBGyiWQ+Cp/s8XcPd+8jPPZXkwtdNBQQXmgF6dLvsJnja739mFWQ==
+  dependencies:
+    "@revenuecat/purchases-typescript-internal" "13.32.0"
 
 react-native-reanimated@~3.17.3:
   version "3.17.4"
