@@ -1,7 +1,6 @@
 import React from "react";
 import { View } from "react-native";
 import { Alert, ActivityIndicator } from "react-native";
-import Purchases from "react-native-purchases";
 import { useNetInfo } from "@react-native-community/netinfo";
 
 import { Paywall } from "@/components/Paywall";
@@ -16,7 +15,6 @@ export default function Settings() {
     const { signOut } = useAuth();
 
     const [sdkReady, setSdkReady] = React.useState(false);
-    const [initializing, setInitializing] = React.useState(false);
     const [isPaywallVisible, setPaywallVisible] = React.useState(false);
 
     const netInfo = useNetInfo();
@@ -24,23 +22,27 @@ export default function Settings() {
 
     // --- RevenueCat initialisation ------------------------------------------------
     React.useEffect(() => {
-        (async () => {
-            try {
-                await configureRevenueCat();
-                setSdkReady(true);
-            } catch (e) {
-                console.error("[revenuecat] configure failed", e);
+        try {
+            const ok = configureRevenueCat();
+            if (!ok) {
                 Alert.alert(
                     "Purchase Error",
                     "Unable to initialise the purchase SDK. Please try again later.",
                 );
             }
-        })();
+            setSdkReady(ok);
+        } catch (e) {
+            console.error("[revenuecat] configure failed", e);
+            Alert.alert(
+                "Purchase Error",
+                "Unable to initialise the purchase SDK. Please try again later.",
+            );
+        }
     }, []);
 
     // --- Handlers -----------------------------------------------------------------
-    const handleOpenPaywall = React.useCallback(async () => {
-        if (initializing) return; // duplicate-tap guard
+    const handleOpenPaywall = React.useCallback(() => {
+        if (isPaywallVisible) return; // duplicate-tap guard
         if (isOffline) {
             Alert.alert(
                 "Offline",
@@ -56,27 +58,8 @@ export default function Settings() {
             return;
         }
 
-        setInitializing(true);
-        try {
-            const offerings = await Purchases.getOfferings();
-            if (!offerings.current || offerings.current.availablePackages.length === 0) {
-                Alert.alert(
-                    "Unavailable",
-                    "No purchasable packages are currently available. Please try again later.",
-                );
-                return;
-            }
-            setPaywallVisible(true);
-        } catch (error: any) {
-            console.error("[revenuecat] getOfferings failed", error);
-            Alert.alert(
-                "Error",
-                "Unable to load purchase options. Please try again later.",
-            );
-        } finally {
-            setInitializing(false);
-        }
-    }, [initializing, isOffline, sdkReady]);
+        setPaywallVisible(true);
+    }, [isOffline, sdkReady, isPaywallVisible]);
 
     return (
         <View className="flex-1 items-center justify-center bg-background p-4 gap-y-4">
@@ -84,9 +67,9 @@ export default function Settings() {
             <Button
                 onPress={handleOpenPaywall}
                 className="w-full"
-                disabled={initializing || isOffline || !sdkReady}
+                disabled={isOffline || !sdkReady}
             >
-                {initializing ? (
+                {!sdkReady ? (
                     <ActivityIndicator color="#fff" />
                 ) : (
                     <Text>Open Paywall</Text>

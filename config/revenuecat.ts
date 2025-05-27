@@ -11,9 +11,9 @@ export const REVENUECAT_ANDROID_API_KEY =
 
 /**
  * Initialise the RevenueCat SDK.
- * Call this once, as early as possible in your app start-up.
+ * Returns `true` when configured, `false` when skipped or on error.
  */
-export function configureRevenueCat(appUserId?: string | null) {
+export function configureRevenueCat(appUserId?: string | null): boolean {
 	const apiKey =
 		Platform.OS === "ios"
 			? REVENUECAT_IOS_API_KEY
@@ -27,13 +27,19 @@ export function configureRevenueCat(appUserId?: string | null) {
 					: "EXPO_PUBLIC_REVENUECAT_ANDROID_KEY"
 			} is not set – Purchases.configure() has been skipped.`,
 		);
-		return;
+		return false;
 	}
 
-	Purchases.configure({
-		apiKey,
-		appUserID: appUserId ?? undefined,
-	});
+	try {
+		Purchases.configure({
+			apiKey,
+			appUserID: appUserId ?? undefined,
+		});
+		return true;
+	} catch (err) {
+		console.error("[revenuecat] configure failed:", err);
+		return false;
+	}
 }
 
 /**

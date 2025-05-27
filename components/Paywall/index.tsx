@@ -52,6 +52,17 @@ export function Paywall({
 	const [state, setState] = React.useState<PaywallState>("loading");
 	const [error, setError] = React.useState<unknown>(null);
 
+	/* ------------------------------------------------------------------ */
+	/* Prevent setting state after the component has unmounted            */
+	/* ------------------------------------------------------------------ */
+	const isMounted = React.useRef(true);
+
+	React.useEffect(() => {
+		return () => {
+			isMounted.current = false;
+		};
+	}, []);
+
 	const fetchData = React.useCallback(async () => {
 		setState("loading");
 		setError(null);
@@ -77,14 +88,20 @@ export function Paywall({
 					"No active offering found while trying to render paywall.",
 				);
 			}
-			setPaywall(active);
+			if (isMounted.current) {
+				setPaywall(active);
+			}
 			const info = await Purchases.getCustomerInfo();
-			setCustomerInfo(info);
-			setState("ready");
+			if (isMounted.current) {
+				setCustomerInfo(info);
+				setState("ready");
+			}
 		} catch (err) {
 			console.error("[Paywall] Failed to load RevenueCat data:", err);
-			setError(err);
-			setState("error");
+			if (isMounted.current) {
+				setError(err);
+				setState("error");
+			}
 		}
 	}, [entitlementKey]);
 
